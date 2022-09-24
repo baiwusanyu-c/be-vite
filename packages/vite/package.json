@@ -1,0 +1,15 @@
+{
+  "name": "vite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "be-vite": "bin/vite.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,46 +1,63 @@
 lockfileVersion: 5.4
 
-specifiers:
-  '@types/connect': ^3.4.35
-  '@types/debug': ^4.1.7
-  '@types/fs-extra': ^9.0.13
-  '@types/resolve': ^1.20.2
-  '@types/ws': ^8.5.3
-  cac: ^6.7.14
-  chokidar: ^3.5.3
-  connect: ^3.7.0
-  debug: ^4.3.4
-  es-module-lexer: ^1.0.3
-  esbuild: ^0.15.9
-  fs-extra: ^10.1.0
-  magic-string: ^0.26.4
-  picocolors: ^1.0.0
-  resolve: ^1.22.1
-  rollup: ^2.79.1
-  sirv: ^2.0.2
-  tsup: ^6.2.3
-  ws: ^8.9.0
+overrides:
+  vite: workspace:*
+  '@vitejs/plugin-vue': workspace:*
 
-dependencies:
-  '@types/connect': 3.4.35
-  '@types/debug': 4.1.7
-  '@types/fs-extra': 9.0.13
-  '@types/resolve': 1.20.2
-  '@types/ws': 8.5.3
-  cac: 6.7.14
-  chokidar: 3.5.3
-  connect: 3.7.0
-  debug: 4.3.4
-  es-module-lexer: 1.0.3
-  esbuild: 0.15.9
-  fs-extra: 10.1.0
-  magic-string: 0.26.4
-  picocolors: 1.0.0
-  resolve: 1.22.1
-  rollup: 2.79.1
-  sirv: 2.0.2
-  tsup: 6.2.3
-  ws: 8.9.0
+importers:
+
+  .:
+    specifiers:
+      '@types/connect': ^3.4.35
+      '@types/debug': ^4.1.7
+      '@types/fs-extra': ^9.0.13
+      '@types/resolve': ^1.20.2
+      '@types/ws': ^8.5.3
+      cac: ^6.7.14
+      chokidar: ^3.5.3
+      connect: ^3.7.0
+      debug: ^4.3.4
+      es-module-lexer: ^1.0.3
+      esbuild: ^0.15.9
+      fs-extra: ^10.1.0
+      magic-string: ^0.26.4
+      picocolors: ^1.0.0
+      resolve: ^1.22.1
+      rollup: ^2.79.1
+      sirv: ^2.0.2
+      tsup: ^6.2.3
+      vite: workspace:*
+      ws: ^8.9.0
+    dependencies:
+      '@types/connect': 3.4.35
+      '@types/debug': 4.1.7
+      '@types/fs-extra': 9.0.13
+      '@types/resolve': 1.20.2
+      '@types/ws': 8.5.3
+      cac: 6.7.14
+      chokidar: 3.5.3
+      connect: 3.7.0
+      debug: 4.3.4
+      es-module-lexer: 1.0.3
+      esbuild: 0.15.9
+      fs-extra: 10.1.0
+      magic-string: 0.26.4
+      picocolors: 1.0.0
+      resolve: 1.22.1
+      rollup: 2.79.1
+      sirv: 2.0.2
+      tsup: 6.2.3
+      vite: link:packages/vite
+      ws: 8.9.0
+
+  packages/vite:
+    specifiers: {}
+
+  playground/init-demo:
+    specifiers:
+      vite: workspace:*
+    dependencies:
+      vite: link:../../packages/vite
 
 packages:
 
