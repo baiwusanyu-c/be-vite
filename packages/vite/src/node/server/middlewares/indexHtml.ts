@@ -1,4 +1,4 @@
-// 编译入口 html 中间件
+// 编译入口 html 的中间件
 import { NextHandleFunction } from "connect";
 import { ServerContext } from "../index";
 import path from "path";
@@ -21,7 +21,6 @@ export function indexHtmlMiddware(
                         html = await plugin.transformIndexHtml(html);
                     }
                 }
-
                 res.statusCode = 200;
                 res.setHeader("Content-Type", "text/html");
                 return res.end(html);

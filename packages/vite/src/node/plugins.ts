@@ -1,5 +1,8 @@
 import { LoadResult, PartialResolvedId, SourceDescription } from "rollup";
 import { ServerContext } from "./server";
+import {resolvePlugin} from "./plugins/resolve";
+import {esbuildTransformPlugin} from "./plugins/esbuild";
+import {importAnalysisPlugin} from "./plugins/importAnalysis";
 
 export type ServerHook = (
     server: ServerContext
@@ -24,5 +27,5 @@ export interface Plugins {
 
 export function resolvePlugins(): Plugins[] {
     // 下一部分会逐个补充插件逻辑
-    return [];
+    return [resolvePlugin(), esbuildTransformPlugin(), importAnalysisPlugin()];
 }

@@ -24,5 +24,11 @@ export const EXTERNAL_TYPES = [
 
 export const BARE_IMPORT_RE = /^[\w@][^:]/;
 
-// 预构建产物默认存放在 node_modules 中的 .m-vite 目录中
+// 预构建产物默认存放在 node_modules 中的 .be-m-vite 目录中
 export const PRE_BUNDLE_DIR = path.join("node_modules", ".be-m-vite");
+// 识别jsx、ts等脚本后缀
+export const JS_TYPES_RE = /\.(?:j|t)sx?$|\.mjs$/;
+export const QEURY_RE = /\?.*$/s;
+export const HASH_RE = /#.*$/s;
+
+export const DEFAULT_EXTERSIONS = [".tsx", ".ts", ".jsx", "js"];
