@@ -13,8 +13,14 @@ export async function transformRequest(
     url: string,
     serverContext: ServerContext
 ) {
-    const { pluginContainer } = serverContext;
+    const { moduleGraph, pluginContainer } = serverContext;
     url = cleanUrl(url);
+    // 根据 url 获取模块依赖图节点 如果存在直接返回之前的转换结果
+    let mod = await moduleGraph.getModuleByUrl(url);
+    if (mod && mod.transformResult) {
+        return mod.transformResult;
+    }
+
     // 简单来说，就是依次调用插件容器的 resolveId、load、transform 方法
     // 从插件容器中调用这些方法，实际上就是循环列插件列表，挨个调用这些钩子
     // 其中不乏有一些 ts -》js 这种相关 transform 插件
@@ -27,12 +33,18 @@ export async function transformRequest(
         if (typeof code === "object" && code !== null) {
             code = code.code;
         }
+        // 根据 url 初始化创建模块依赖图节点
+        mod = await moduleGraph.ensureEntryFromUrl(url);
         if (code) {
             transformResult = await pluginContainer.transform(
                 code as string,
                 resolvedResult?.id
             );
         }
+    }
+    // 记录转换结果到模块依赖图节点
+    if (mod) {
+        mod.transformResult = transformResult;
     }
     return transformResult;
 }

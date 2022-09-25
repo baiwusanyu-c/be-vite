@@ -9,12 +9,14 @@ import { createPluginContainer, PluginContainer } from "../pluginContainer";
 import {indexHtmlMiddware} from "./middlewares/indexHtml";
 import {transformMiddleware} from "./middlewares/transform";
 import {staticMiddleware} from "./middlewares/static";
+import { ModuleGraph } from "../moduleGraph";
 // node 服务上下文
 export interface ServerContext {
     root: string; // 项目启动根路径
     pluginContainer: PluginContainer; // 插件容器
     app: connect.Server; // connect的服务实例
     plugins: Plugins[]; // 插件列表
+    moduleGraph: ModuleGraph; // 依赖模块图
 }
 
 // 开启一个 vite 使用的 node 服务
@@ -28,12 +30,15 @@ export async function startDevServer() {
     const plugins = resolvePlugins();
     // 创建插件容器对象
     const pluginContainer = createPluginContainer(plugins);
+    // 构建模块依赖图,与模块依赖构架你相关插件的 resolveId 钩子会这里运行
+    const moduleGraph = new ModuleGraph((url) => pluginContainer.resolveId(url));
      // 配置服务上下文
      const serverContext: ServerContext = {
            root: process.cwd(),
            app,
            pluginContainer,
            plugins,
+           moduleGraph,
          };
     // 遍历插件列表，执行插件 configureServer 钩子
      for (const plugin of plugins) {

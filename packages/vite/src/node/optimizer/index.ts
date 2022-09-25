@@ -9,7 +9,7 @@ export async function optimize(root: string) {
     // 1. 确定入口
     const entry = path.resolve(root, "src/main.tsx");
     // 2. 从入口处扫描依赖
-    // 扫描依赖的依赖图对象
+    // 扫描依赖的模块依赖图对象
     const deps = new Set<string>();
     // 使用 esbuild 构建，write 为 false
     await build({
