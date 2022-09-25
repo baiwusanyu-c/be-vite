@@ -2,7 +2,7 @@
   "name": "init-demo",
   "version": "1.0.0",
   "scripts": {
-    "play":"be-vite"
+    "play":"cross-env DEBUG=dev be-vite"
   },
   "dependencies": {
     "react": "17",
@@ -13,6 +13,7 @@
     "@types/react-dom": "17",
     "@vitejs/plugin-react": "^1.3.0",
     "vite": "workspace:*",
-    "typescript": "^4.6.3"
+    "typescript": "^4.6.3",
+    "cross-env": "^7.0.3"
   }
 }

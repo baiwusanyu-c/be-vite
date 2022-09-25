@@ -40,7 +40,6 @@ export function resolvePlugin(): Plugins {
                 // 如 ./App.tsx
                 if (hasExtension) {
                     // resolve.sync 路径算法分析相对路径
-                    console.log(id,path.dirname(importer))
                     resolvedId = resolve.sync(id, { basedir: path.dirname(importer) });
                     if (await pathExists(resolvedId)) {
                         return { id: resolvedId };
@@ -53,7 +52,6 @@ export function resolvePlugin(): Plugins {
                     for (const extname of DEFAULT_EXTERSIONS) {
                         try {
                             const withExtension = `${id}${extname}`;
-                            console.log(withExtension,path.dirname(importer))
                             resolvedId = resolve.sync(withExtension, {
                                 basedir: path.dirname(importer),
                             });

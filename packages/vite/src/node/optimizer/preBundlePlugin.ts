@@ -78,7 +78,7 @@ export function preBundlePlugin(deps: Set<string>): Plugin {
                         }
                         proxyModule.push(`export * from "${entryPath}"`);
                     }
-                    debug("代理模块内容: %o", proxyModule.join("\n"));
+                    // debug("代理模块内容: %o", proxyModule.join("\n"));
                     const loader = path.extname(entryPath).slice(1);
                     return {
                         loader: loader as Loader,

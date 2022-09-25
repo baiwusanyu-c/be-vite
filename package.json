@@ -32,7 +32,8 @@
     "sirv": "^2.0.2",
     "tsup": "^6.2.3",
     "ws": "^8.9.0",
-    "vite": "workspace:*"
+    "vite": "workspace:*",
+    "cross-env": "^7.0.3"
   },
   "packageManager": "pnpm@7.9.5",
   "pnpm": {

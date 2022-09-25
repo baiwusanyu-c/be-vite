@@ -3,6 +3,7 @@ import { ServerContext } from "./server";
 import {resolvePlugin} from "./plugins/resolve";
 import {esbuildTransformPlugin} from "./plugins/esbuild";
 import {importAnalysisPlugin} from "./plugins/importAnalysis";
+import {cssPlugin} from "./plugins/css";
 
 export type ServerHook = (
     server: ServerContext
@@ -27,5 +28,5 @@ export interface Plugins {
 
 export function resolvePlugins(): Plugins[] {
     // 下一部分会逐个补充插件逻辑
-    return [resolvePlugin(), esbuildTransformPlugin(), importAnalysisPlugin()];
+    return [resolvePlugin(), esbuildTransformPlugin(), importAnalysisPlugin(),cssPlugin()];
 }
