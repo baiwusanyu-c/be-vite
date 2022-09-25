@@ -8,6 +8,7 @@ import { resolvePlugins,Plugins } from "../plugins";
 import { createPluginContainer, PluginContainer } from "../pluginContainer";
 import {indexHtmlMiddware} from "./middlewares/indexHtml";
 import {transformMiddleware} from "./middlewares/transform";
+import {staticMiddleware} from "./middlewares/static";
 // node 服务上下文
 export interface ServerContext {
     root: string; // 项目启动根路径
@@ -40,11 +41,12 @@ export async function startDevServer() {
                await plugin.configureServer(serverContext);
              }
      }
-     // 插件的钩子放在插件容器中 pluginContainer
+    // 插件的钩子放在插件容器中 pluginContainer
     // 插件容器在服务上下文中 serverContext
     // 一些中间件会访问服务上下文进而执行插件
     app.use(indexHtmlMiddware(serverContext));
     app.use(transformMiddleware(serverContext));
+    app.use(staticMiddleware());
 
     app.listen(3000, async () => {
         // 预构建依赖

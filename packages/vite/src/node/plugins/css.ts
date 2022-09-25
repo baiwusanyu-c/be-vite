@@ -1,3 +1,6 @@
+// css 解析加载插件
+
+// 对 css 相关请求处理，将 import css 转化为动态创建标签来加载 css 的代码
 import { readFile } from "fs-extra";
 import { Plugins } from "../plugins";
 

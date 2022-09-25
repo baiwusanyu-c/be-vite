@@ -15,5 +15,14 @@ export const isJSRequest = (id: string): boolean => {
 export const isCSSRequest = (id: string): boolean =>
     cleanUrl(id).endsWith(".css");
 
+// 判断浏览器请求是否是 svg 等相关静态资源请求
+export function isImportRequest(url: string): boolean {
+    return url.endsWith("?import");
+}
+
 export const cleanUrl = (url: string): string =>
     url.replace(HASH_RE, "").replace(QEURY_RE, "");
+
+export function removeImportQuery(url: string): string {
+    return url.replace(/\?import$/, "");
+}

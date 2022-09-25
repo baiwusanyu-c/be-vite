@@ -1,9 +1,11 @@
+// 内置相关插件注册入口
 import { LoadResult, PartialResolvedId, SourceDescription } from "rollup";
 import { ServerContext } from "./server";
 import {resolvePlugin} from "./plugins/resolve";
 import {esbuildTransformPlugin} from "./plugins/esbuild";
 import {importAnalysisPlugin} from "./plugins/importAnalysis";
 import {cssPlugin} from "./plugins/css";
+import {assetPlugin} from "./plugins/assets";
 
 export type ServerHook = (
     server: ServerContext
@@ -25,8 +27,14 @@ export interface Plugins {
     ) => Promise<SourceDescription | null> | SourceDescription | null;
     transformIndexHtml?: (raw: string) => Promise<string> | string;
 }
-
+// 内置相关插件注册入口
 export function resolvePlugins(): Plugins[] {
     // 下一部分会逐个补充插件逻辑
-    return [resolvePlugin(), esbuildTransformPlugin(), importAnalysisPlugin(),cssPlugin()];
+    return [
+        resolvePlugin(),
+        esbuildTransformPlugin(),
+        importAnalysisPlugin(),
+        cssPlugin(),
+        assetPlugin()
+    ];
 }
