@@ -7,6 +7,7 @@ import { ServerContext } from "../server";
 import path from "path";
 import { pathExists } from "fs-extra";
 import { DEFAULT_EXTERSIONS } from "../constants";
+import { removeImportQuery, cleanUrl, isInternalRequest } from "../utils";
 
 export function resolvePlugin(): Plugins {
     let serverContext: ServerContext;
@@ -17,6 +18,10 @@ export function resolvePlugin(): Plugins {
             serverContext = s;
         },
         async resolveId(id: string, importer?: string) {
+            id = removeImportQuery(cleanUrl(id));
+            if (isInternalRequest(id)) {
+                return null;
+            }
             // 1. 绝对路径
             if (path.isAbsolute(id)) {
                 if (await pathExists(id)) {

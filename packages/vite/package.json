@@ -9,6 +9,9 @@
   "bin": {
     "be-vite": "bin/vite.js"
   },
+  "dependencies": {
+    "react-refresh": "^0.13.0"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC"

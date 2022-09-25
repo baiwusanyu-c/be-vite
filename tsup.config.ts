@@ -4,6 +4,7 @@ export default defineConfig({
     // 后续会增加 entry
     entry: {
         index: "packages/vite/src/node/cli.ts",
+        client: "packages/vite/src/node/client/index.ts",
     },
     // 产物格式，包含 esm 和 cjs 格式
     format: ["esm", "cjs"],
@@ -13,4 +14,6 @@ export default defineConfig({
     sourcemap: true,
     // 没有拆包的需求，关闭拆包能力
     splitting: false,
+    outDir:'packages/vite/dist',
+    external: ["@babel/core", "react-refresh"],
 });

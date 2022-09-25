@@ -1,5 +1,6 @@
-import { JS_TYPES_RE,HASH_RE,QEURY_RE} from './constants'
+import { JS_TYPES_RE,HASH_RE,QEURY_RE,CLIENT_PUBLIC_PATH} from './constants'
 import path from 'path'
+const INTERNAL_LIST = [CLIENT_PUBLIC_PATH, "/@react-refresh"];
 // 判断浏览器请求是否是 js 相关资源请求
 export const isJSRequest = (id: string): boolean => {
     id = cleanUrl(id);
@@ -29,4 +30,8 @@ export function removeImportQuery(url: string): string {
 
 export function getShortName(file: string, root: string) {
     return file.startsWith(root + "/") ? path.posix.relative(root, file) : file;
+}
+// 是否是 vite 内部请求
+export function isInternalRequest(url: string): boolean {
+    return INTERNAL_LIST.includes(url);
 }

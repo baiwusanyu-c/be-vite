@@ -41,11 +41,10 @@ export async function startDevServer() {
     const plugins = resolvePlugins();
     // 创建插件容器对象
     const pluginContainer = createPluginContainer(plugins);
-    // 构建模块依赖图,与模块依赖构架你相关插件的 resolveId 钩子会这里运行
+    // 构建模块依赖图,与模块依赖构建相关插件的 resolveId 钩子会这里运行
     const moduleGraph = new ModuleGraph((url) => pluginContainer.resolveId(url));
     // 初始化创建 websocket 连接，并返回 ws 对象（包含 send、close）
     const ws = createWebSocketServer(app);
-
      // 配置服务上下文
      const serverContext: ServerContext = {
            root: process.cwd(),
@@ -58,7 +57,7 @@ export async function startDevServer() {
      };
      // 将服务上下文绑定到热更新 hmr 服务中，
      // 文件监听起 watcher 和 ws 实际上是在这里面做具体使用到
-    bindingHMREvents(serverContext);
+     bindingHMREvents(serverContext);
     // 遍历插件列表，执行插件 configureServer 钩子
      for (const plugin of plugins) {
            if (plugin.configureServer) {
@@ -68,8 +67,8 @@ export async function startDevServer() {
     // 插件的钩子放在插件容器中 pluginContainer
     // 插件容器在服务上下文中 serverContext
     // 一些中间件会访问服务上下文进而执行插件
-    app.use(indexHtmlMiddware(serverContext));
-    app.use(transformMiddleware(serverContext));
+    app.use(indexHtmlMiddware(serverContext)); // 包含执行客户端注入
+    app.use(transformMiddleware(serverContext));// 包含客户端脚本你加载处理
     app.use(staticMiddleware());
 
     app.listen(3000, async () => {

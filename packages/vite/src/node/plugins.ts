@@ -6,6 +6,8 @@ import {esbuildTransformPlugin} from "./plugins/esbuild";
 import {importAnalysisPlugin} from "./plugins/importAnalysis";
 import {cssPlugin} from "./plugins/css";
 import {assetPlugin} from "./plugins/assets";
+import { clientInjectPlugin } from './plugins/clientInject';
+import { reactHMRPlugin } from "./plugins/react-hmr";
 
 export type ServerHook = (
     server: ServerContext
@@ -29,10 +31,11 @@ export interface Plugins {
 }
 // 内置相关插件注册入口
 export function resolvePlugins(): Plugins[] {
-    // 下一部分会逐个补充插件逻辑
     return [
+        clientInjectPlugin(),
         resolvePlugin(),
         esbuildTransformPlugin(),
+        reactHMRPlugin(),
         importAnalysisPlugin(),
         cssPlugin(),
         assetPlugin()

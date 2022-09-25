@@ -2,6 +2,7 @@
   "name": "init-demo",
   "version": "1.0.0",
   "scripts": {
+    "init": "pnpm install",
     "play":"cross-env DEBUG=dev be-vite"
   },
   "dependencies": {

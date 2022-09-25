@@ -16,6 +16,7 @@ export function indexHtmlMiddware(
                 const rawHtml = await readFile(indexHtmlPath, "utf8");
                 let html = rawHtml;
                 // 通过执行插件的 transformIndexHtml 方法来对 HTML 进行自定义的修改
+                // 注意这里和其他插件使用插件容器 pluginContainer 调用不一样，这里是直接调用
                 for (const plugin of serverContext.plugins) {
                     if (plugin.transformIndexHtml) {
                         html = await plugin.transformIndexHtml(html);
