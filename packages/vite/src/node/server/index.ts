@@ -6,9 +6,10 @@ import { blue, green } from "picocolors";
 import { optimize } from "../optimizer";
 import { resolvePlugins,Plugins } from "../plugins";
 import { createPluginContainer, PluginContainer } from "../pluginContainer";
+import {indexHtmlMiddware} from "./middlewares/indexHtml";
 // node 服务上下文
 export interface ServerContext {
-    root: string;
+    root: string; // 项目启动根路径
     pluginContainer: PluginContainer; // 插件容器
     app: connect.Server; // connect的服务实例
     plugins: Plugins[]; // 插件列表
@@ -38,6 +39,7 @@ export async function startDevServer() {
                await plugin.configureServer(serverContext);
              }
      }
+    app.use(indexHtmlMiddware(serverContext));
 
     app.listen(3000, async () => {
         // 预构建依赖
