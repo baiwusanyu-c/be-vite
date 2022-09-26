@@ -6,7 +6,9 @@
   "scripts": {
     "init": "pnpm install",
     "start": "tsup --watch",
-    "build": "tsup --minify"
+    "build": "tsup --minify",
+    "play": "pnpm --filter init-demo run play",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
@@ -19,12 +21,14 @@
     "@types/resolve": "^1.20.2",
     "@types/ws": "^8.5.3",
     "esbuild-darwin-arm64": "^0.14.38",
+    "jsdom": "^20.0.0",
     "tsup": "^5.12.6",
-    "typescript": "^4.6.4"
+    "typescript": "^4.6.4",
+    "vitest": "^0.23.4"
   },
   "dependencies": {
-    "vite": "workspace:*",
     "@babel/core": "^7.17.10",
+    "be-vite": "workspace:*",
     "cac": "^6.7.12",
     "chokidar": "^3.5.3",
     "connect": "^3.7.0",
@@ -43,7 +47,7 @@
   "packageManager": "pnpm@7.9.5",
   "pnpm": {
     "overrides": {
-      "vite": "workspace:*",
+      "be-vite": "workspace:*",
       "@vitejs/plugin-vue": "workspace:*"
     }
   }

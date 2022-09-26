@@ -24,7 +24,7 @@ export function clientInjectPlugin(): Plugins {
                 const realPath = path.join(
                     serverContext.root,
                     "node_modules",
-                    "vite",
+                    "be-vite",
                     "dist",
                     "client.mjs"
                 );
