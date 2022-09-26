@@ -19,6 +19,21 @@ export enum TokenType {
     LeftCurly = "LeftCurly",
     // }
     RightCurly = "RightCurly",
+    Const = "Const",
+    Var = "Var",
+    Number = "Number",
+    Operator = "Operator",
+    Comma = "Comma",
+    Dot = "Dot",
+    Semicolon = "Semicolon",
+    StringLiteral = "StringLiteral",
+    Return = "Return",
+    Import = "Import",
+    Export = "Export",
+    Default = "Default",
+    From = "From",
+    As = "As",
+    Asterisk = "Asterisk",
 }
 // 词法分析 token 对象
 export type Token = {
