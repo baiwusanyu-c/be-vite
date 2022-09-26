@@ -63,7 +63,6 @@ export function preBundlePlugin(deps: Set<string>): Plugin {
                     let proxyModule = [];
                     // 设置相对路径
                     let relativePath = normalizePath(path.relative(root, entryPath))
-                    console.log(relativePath)
                      if (
                        !relativePath.startsWith('./') &&
                        !relativePath.startsWith('../') &&

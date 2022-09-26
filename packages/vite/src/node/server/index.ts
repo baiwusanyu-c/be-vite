@@ -69,7 +69,7 @@ export async function startDevServer() {
     // 一些中间件会访问服务上下文进而执行插件
     app.use(indexHtmlMiddware(serverContext)); // 包含执行客户端注入
     app.use(transformMiddleware(serverContext));// 包含客户端脚本你加载处理
-    app.use(staticMiddleware());
+    app.use(staticMiddleware()); // 静态服务器中间件
 
     app.listen(3000, async () => {
         // 预构建依赖

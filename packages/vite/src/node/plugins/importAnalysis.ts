@@ -67,11 +67,15 @@ export function importAnalysisPlugin(): Plugins {
                 // str.slice(s, e) => 'react'
                 const {s: modStart, e: modEnd, n: modSource} = importInfo;
                 if (!modSource || isInternalRequest(modSource)) continue;
-                // 静态资源
+                // 静态资源 鱼预构建分析时，改写 加上后缀，
+                // 客户端请求时，在中间件中再改写导出对应资源
+                // 最后使用静态资源服务器返回
                 if (modSource.endsWith(".svg")) {
                     // 加上 ?import 后缀
                     const resolvedUrl = path.join(path.dirname(id), modSource);
-                    ms.overwrite(modStart, modEnd, `${resolvedUrl}?import`);
+                    const root = process.cwd()
+                    const relativePath = normalizePath(path.relative(root, resolvedUrl))
+                    ms.overwrite(modStart, modEnd, `/${relativePath}?import`);
                     continue;
                 }
                 // 第三方库: 路径重写到预构建产物的路径（node_modules/be-m-vite）
