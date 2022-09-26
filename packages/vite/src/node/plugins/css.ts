@@ -5,7 +5,7 @@ import { readFile } from "fs-extra";
 import { CLIENT_PUBLIC_PATH } from "../constants";
 import { Plugins } from "../plugins";
 import { ServerContext } from "../server";
-import { getShortName } from "../utils";
+import {getShortName, isWindows} from "../utils";
 
 export function cssPlugin(): Plugins {
     let serverContext: ServerContext;
@@ -24,6 +24,7 @@ export function cssPlugin(): Plugins {
         async transform(code, id) {
             // 将 import css 转化为动态创建标签来加载 css 的代码
             if (id.endsWith(".css")) {
+                const regLine = isWindows ? /\r\n/g : /\n/g
                 // 包装成 JS 模块
                 const jsContent = `
 import { createHotContext as __vite__createHotContext } from "${CLIENT_PUBLIC_PATH}";
@@ -32,7 +33,7 @@ import.meta.hot = __vite__createHotContext("/${getShortName(id, serverContext.ro
 import { updateStyle, removeStyle } from "${CLIENT_PUBLIC_PATH}"
   
 const id = '${id}';
-const css = '${code.replace(/\r\n/g, "")}';
+const css = '${code.replace(regLine, "")}';
 
 updateStyle(id, css);
 import.meta.hot.accept();
