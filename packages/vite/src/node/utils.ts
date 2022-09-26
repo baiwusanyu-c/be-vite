@@ -35,3 +35,12 @@ export function getShortName(file: string, root: string) {
 export function isInternalRequest(url: string): boolean {
     return INTERNAL_LIST.includes(url);
 }
+
+export function slash(p: string): string {
+    return p.replace(/\\/g, '/')
+}
+export const isWindows = process.platform === 'win32'
+
+export function normalizePath(id: string): string {
+    return path.posix.normalize(isWindows ? slash(id) : id)
+}

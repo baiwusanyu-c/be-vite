@@ -9,6 +9,7 @@ import resolve from "resolve";
 import fs from "fs-extra";
 // 用来开发打印 debug 日志的库
 import createDebug from "debug";
+import {normalizePath} from "../utils";
 
 // 创建开发模式debug对象
 const debug = createDebug("dev");
@@ -56,9 +57,21 @@ export function preBundlePlugin(deps: Set<string>): Plugin {
                     const root = process.cwd();
                     const entryPath = resolve.sync(id, { basedir: root });
                     const code = await fs.readFile(entryPath, "utf-8");
+
                     // 根据源文件内容 分析出入口文件 import 和 export 信息
                     const [imports, exports] = await parse(code);
                     let proxyModule = [];
+                    // 设置相对路径
+                    let relativePath = normalizePath(path.relative(root, entryPath))
+                    console.log(relativePath)
+                     if (
+                       !relativePath.startsWith('./') &&
+                       !relativePath.startsWith('../') &&
+                       relativePath !== '.'
+                     ) {
+                               relativePath = `./${relativePath}`
+                        }
+
                     // cjs
                     if (!imports.length && !exports.length) {
                         // 构造代理模块
@@ -67,16 +80,16 @@ export function preBundlePlugin(deps: Set<string>): Plugin {
                         const specifiers = Object.keys(res);
                         // 构造 export 语句交给 Esbuild 打包
                         proxyModule.push(
-                            `export { ${specifiers.join(",")} } from "${entryPath}"`,
-                            `export default require("${entryPath}")`
+                            `export { ${specifiers.join(",")} } from "${relativePath}"`,
+                            `export default require("${relativePath}")`
                         );
                     } else {
                         // esm 格式比较好处理，export * 或者 export default 即可
                         // @ts-ignore
                         if (exports.includes("default")) {
-                            proxyModule.push(`import d from "${entryPath}";export default d`);
+                            proxyModule.push(`import d from "${relativePath}";export default d`);
                         }
-                        proxyModule.push(`export * from "${entryPath}"`);
+                        proxyModule.push(`export * from "${relativePath}"`);
                     }
                     // debug("代理模块内容: %o", proxyModule.join("\n"));
                     const loader = path.extname(entryPath).slice(1);

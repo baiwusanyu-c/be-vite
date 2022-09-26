@@ -16,6 +16,7 @@ export function staticMiddleware(): NextHandleFunction {
             return;
         }
         // 使用 sirv 库加载静态资源
+        console.log(req, res, next)
         serveFromRoot(req, res, next);
     };
 }

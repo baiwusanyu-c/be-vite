@@ -10,7 +10,7 @@ import {
 import {
     cleanUrl,
     getShortName, isInternalRequest,
-    isJSRequest,
+    isJSRequest, normalizePath,
 } from "../utils";
 // magic-string 用来作字符串编辑
 import MagicString from "magic-string";
@@ -76,11 +76,9 @@ export function importAnalysisPlugin(): Plugins {
                 }
                 // 第三方库: 路径重写到预构建产物的路径（node_modules/be-m-vite）
                 if (BARE_IMPORT_RE.test(modSource)) {
-                    const bundlePath = path.join(
-                        serverContext.root,
-                        PRE_BUNDLE_DIR,
-                        `${modSource}.js`
-                    );
+                    const bundlePath = normalizePath(
+                           path.join('/', PRE_BUNDLE_DIR, `${modSource}.js`)
+                    )
                     ms.overwrite(modStart, modEnd, bundlePath);
                     // 添加到依赖集合
                     importedModules.add(bundlePath);

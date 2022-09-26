@@ -7,7 +7,7 @@ import { ServerContext } from "../server";
 import path from "path";
 import { pathExists } from "fs-extra";
 import { DEFAULT_EXTERSIONS } from "../constants";
-import { removeImportQuery, cleanUrl, isInternalRequest } from "../utils";
+import {removeImportQuery, cleanUrl, isInternalRequest, normalizePath} from "../utils";
 
 export function resolvePlugin(): Plugins {
     let serverContext: ServerContext;
@@ -47,7 +47,9 @@ export function resolvePlugin(): Plugins {
                     // resolve.sync 路径算法分析相对路径
                     resolvedId = resolve.sync(id, { basedir: path.dirname(importer) });
                     if (await pathExists(resolvedId)) {
-                        return { id: resolvedId };
+                        const root = process.cwd()
+                        const relativePath = normalizePath(path.relative(root, resolvedId))
+                        return { id:relativePath };
                     }
                 }
                     // 2.2 不包含文件名后缀
@@ -61,7 +63,9 @@ export function resolvePlugin(): Plugins {
                                 basedir: path.dirname(importer),
                             });
                             if (await pathExists(resolvedId)) {
-                                return { id: resolvedId };
+                                const root = process.cwd()
+                                const relativePath = normalizePath(path.relative(root, resolvedId))
+                                return { id: relativePath };
                             }
                         } catch (e) {
                             continue;

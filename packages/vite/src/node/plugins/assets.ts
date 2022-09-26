@@ -7,7 +7,9 @@ export function assetPlugin(): Plugins {
     return {
         name: "be-m-vite:asset",
         async load(id) {
+            debugger
             const cleanedId = removeImportQuery(cleanUrl(id));
+            console.log(cleanedId)
             // 这里仅处理 svg
             // import svg 转化为 svg 导出代码
             if (cleanedId.endsWith(".svg")) {
